@@ -1,0 +1,54 @@
+#include <Servo.h>
+
+int position1 = 0;
+int position2 = 0;
+const int SERVO1=9;
+const int SERVO2=8;
+const int SENSOR1=A0;
+const int SENSOR2=A1;
+const int SENSOR3=A2;
+const int SENSOR4=A3;
+
+Servo myservo1;  // create servo object to control a servo number 1
+Servo myservo2;  // create servo object to control a servo number 2
+
+void setup()
+{
+  myservo1.attach(SERVO1);
+  myservo1.write(0);//Move servo 1 to main position.
+  myservo2.attach(SERVO2);
+  myservo2.write(0);//Move servo 2 to main position.
+  Serial.begin(9600);
+}
+
+void loop()
+{ 
+  int val1 = analogRead(SENSOR1);
+  int val2 = analogRead(SENSOR2);
+  int val3 = analogRead(SENSOR3);
+  int val4 = analogRead(SENSOR4);
+  if (val1<val2){
+    position1 = position1 + 5;
+    myservo1.write (position1);
+    delay(300);
+  }
+  if (val2<val1){
+    position1 = position1 - 5;
+  	myservo1.write (position1);
+    delay(300);
+  }
+  if (val3<val4){
+    position2 = position2 + 5;
+    myservo2.write (position2);
+    delay(300);
+  }
+  if (val4<val3){
+    position2 = position2 - 5;
+  	myservo2.write (position2);
+    delay(300);
+  }
+  else {
+    myservo1.write (position1);
+    myservo2.write (position2);
+  }
+}
